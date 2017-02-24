@@ -1,5 +1,6 @@
 " be iMproved, required
 set nocompatible
+
 " required
 filetype off
 
@@ -148,3 +149,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " Use Ctrl n to open NERDTree
 map <C-n> :NERDTreeToggle<CR>
+
+" Use Ctrl p to open CtrlP
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
