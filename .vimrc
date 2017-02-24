@@ -150,6 +150,9 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " Use Ctrl n to open NERDTree
 map <C-n> :NERDTreeToggle<CR>
 
-" Use Ctrl p to open CtrlP
+" CtrlP commands
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+
+" AG for Vim commands
+let g:ackprg = 'ag --nogroup --nocolor --column'
