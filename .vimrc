@@ -27,6 +27,9 @@ set number
 " set tabs to have 4 spaces
 set ts=4
 
+" set modifibale
+set modifiable
+
 " indent when moving to the next line when writing code
 set autoindent
 
@@ -47,7 +50,7 @@ let python_highlight_all = 1
 syntax on
 
 " use split right and below
-set splitbelow
+" set splitbelow
 set splitright
 
 " make backspaces more powerfull
@@ -56,6 +59,15 @@ set backspace=indent,eol,start
 " search as characters are entered
 set incsearch
 set hlsearch
+
+" set font size for vim and powerline
+set guifont=Menlo:h18
+set guifont=Inconsolata\ for\ Powerline:h18
+let g:Powerline_symbols = 'fancy'
+set t_Co=256
+set fillchars+=stl:\ ,stlnc:\
+set term=xterm-256color
+set termencoding=utf-8
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -98,6 +110,8 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 " Powerline
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'moll/vim-node'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -114,6 +128,10 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 " Set theme if gui is running
 if has('gui_running')
+    let s:uname = system("uname")
+    if s:uname == "Darwin\n"
+        set guifont=Inconsolata\ for\ Powerline:h15
+    endif
     set background=dark
     colorscheme sidonia
 else
@@ -138,9 +156,9 @@ au BufNewFile,BufRead *.py
     \ set autoindent |
     \ set fileformat=unix
 
-au BufNewFile,BufRead *.js, *.html, *.css
-    \ set tabstop=2
-    \ set softtabstop=2
+au BufNewFile,BufRead *.js,*.html,*.css
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
     \ set shiftwidth=2
 
 " Open NERDTree if no files were specified
