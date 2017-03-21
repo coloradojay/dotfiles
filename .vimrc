@@ -10,6 +10,15 @@ set encoding=utf-8
 " enable folding
 set foldmethod=indent
 
+" enable folding
+set foldenable
+
+" show all folds
+set foldlevelstart=10
+
+" 10 nested fold max
+set foldnestmax=10
+
 " we dont need no stinking swap files
 set backup
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
@@ -20,6 +29,7 @@ set writebackup
 " use ruler and tabstop
 set ruler
 set tabstop=4
+set softtabstop=4
 
 " show line numbers
 set number
@@ -47,7 +57,7 @@ set showmatch
 
 " enable all Python syntax highlighting
 let python_highlight_all = 1
-syntax on
+syntax enable
 
 " use split right and below
 " set splitbelow
@@ -104,6 +114,7 @@ Plugin 'nvie/vim-flake8'
 Plugin 'alessandroyorba/sidonia'
 Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'sjl/badwolf'
 " File Browsing
 Plugin 'scrooloose/nerdtree'
 " Super Searching
@@ -135,7 +146,7 @@ if has('gui_running')
     set background=dark
     colorscheme sidonia
 else
-    colorscheme zenburn
+    colorscheme badwolf
 endif
 "split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -171,6 +182,10 @@ map <C-n> :NERDTreeToggle<CR>
 " CtrlP commands
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_match_window = 'bottom,order:ttb'
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 
 " AG for Vim commands
 let g:ackprg = 'ag --nogroup --nocolor --column'
