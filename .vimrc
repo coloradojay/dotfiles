@@ -111,10 +111,7 @@ Plugin 'vim-scripts/indentpython.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'nvie/vim-flake8'
 " Themes
-Plugin 'alessandroyorba/sidonia'
-Plugin 'jnurmine/Zenburn'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'sjl/badwolf'
+Plugin 'flazz/vim-colorschemes'
 " File Browsing
 Plugin 'scrooloose/nerdtree'
 " Super Searching
@@ -141,12 +138,12 @@ filetype plugin indent on    " required
 if has('gui_running')
     let s:uname = system("uname")
     if s:uname == "Darwin\n"
-        set guifont=Inconsolata\ for\ Powerline:h15
+        set guifont=SourceCodePro\ for\ Powerline:h15
     endif
     set background=dark
-    colorscheme sidonia
+    colorscheme zenburn
 else
-    colorscheme badwolf
+    colorscheme zenburn
 endif
 "split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -159,18 +156,18 @@ nnoremap <leader><space> :nohlsearch<CR>
 
 " proper indentation
 au BufNewFile,BufRead *.py
-    \ set tabstop=4 |
-    \ set softtabstop=4 |
-    \ set shiftwidth=4 |
-    \ set textwidth=79 |
-    \ set expandtab |
-    \ set autoindent |
-    \ set fileformat=unix
+            \ set tabstop=4 |
+            \ set softtabstop=4 |
+            \ set shiftwidth=4 |
+            \ set textwidth=79 |
+            \ set expandtab |
+            \ set autoindent |
+            \ set fileformat=unix
 
 au BufNewFile,BufRead *.js,*.html,*.css
-    \ set tabstop=2 |
-    \ set softtabstop=2 |
-    \ set shiftwidth=2
+            \ set tabstop=2 |
+            \ set softtabstop=2 |
+            \ set shiftwidth=2
 
 " Open NERDTree if no files were specified
 autocmd StdinReadPre * let s:std_in=1
@@ -178,6 +175,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " Use Ctrl n to open NERDTree
 map <C-n> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
 
 " CtrlP commands
 let g:ctrlp_map = '<c-p>'
@@ -188,4 +186,17 @@ let g:ctrlp_working_path_mode = 0
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 
 " AG for Vim commands
-let g:ackprg = 'ag --nogroup --nocolor --column'
+" let g:ackprg = 'ag --nogroup --nocolor --column'
+" The Silver Searcher
+if executable('ag')
+    " Use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor
+
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+    " ag is fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
+endif
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
