@@ -60,7 +60,7 @@ let python_highlight_all = 1
 syntax enable
 
 " use split right and below
-" set splitbelow
+set splitbelow
 set splitright
 
 " make backspaces more powerfull
@@ -110,6 +110,7 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'nvie/vim-flake8'
+Plugin 'editorconfig/editorconfig-vim'
 " Themes
 Plugin 'flazz/vim-colorschemes'
 " File Browsing
