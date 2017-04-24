@@ -13,6 +13,12 @@ set foldmethod=indent
 " enable folding
 set foldenable
 
+" enable wildmenu => First tab will complete to longest string and show the the match
+" list, then second tab will complete to first full match and open the
+" wildmenu.
+set wildmenu
+set wildmode=longest:list,full
+
 " show all folds
 set foldlevelstart=10
 
@@ -25,6 +31,10 @@ set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set backupskip=/tmp/*,/private/tmp/*
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set writebackup
+
+" Fixin softwordwrapping
+set textwidth=0
+set wrapmargin=0
 
 " use ruler and tabstop
 set ruler
@@ -60,7 +70,7 @@ let python_highlight_all = 1
 syntax enable
 
 " use split right and below
-set splitbelow
+" set splitbelow
 set splitright
 
 " make backspaces more powerfull
@@ -115,6 +125,8 @@ Plugin 'editorconfig/editorconfig-vim'
 Plugin 'flazz/vim-colorschemes'
 " File Browsing
 Plugin 'scrooloose/nerdtree'
+" Nerdtree Tabs
+Plugin 'jistr/vim-nerdtree-tabs'
 " Super Searching
 Plugin 'kien/ctrlp.vim'
 " Powerline
@@ -140,7 +152,7 @@ filetype plugin indent on    " required
 if has('gui_running')
     let s:uname = system("uname")
     if s:uname == "Darwin\n"
-        set guifont=SourceCodePro\ for\ Powerline:h15
+        set guifont=SourceCodePro\ for\ Powerline:h16
     endif
     set background=dark
     colorscheme zenburn
@@ -166,7 +178,7 @@ au BufNewFile,BufRead *.py
             \ set autoindent |
             \ set fileformat=unix
 
-au BufNewFile,BufRead *.js,*.html,*.css
+au BufNewFile,BufRead *.js,*.html,*.css,*.scss
             \ set tabstop=2 |
             \ set softtabstop=2 |
             \ set shiftwidth=2
@@ -179,6 +191,12 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 
+" Drop NERDTree Tabs settings at the end of the config file "
+" Open file via NERDTree Tabs, hot key: \t "
+map <silent> <leader>t :NERDTreeTabsToggle<CR>
+" Start NERDTree Tabs automatically "
+let g:nerdtree_tabs_open_on_console_startup = 1
+
 " CtrlP commands
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
@@ -188,7 +206,7 @@ let g:ctrlp_working_path_mode = 0
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 
 " AG for Vim commands
-" let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ackprg = 'ag --nogroup --nocolor --column'
 " The Silver Searcher
 if executable('ag')
     " Use ag over grep
