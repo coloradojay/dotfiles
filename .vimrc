@@ -80,6 +80,9 @@ set backspace=indent,eol,start
 set incsearch
 set hlsearch
 
+" set color column
+set colorcolumn=80
+
 " set font size for vim and powerline
 set guifont=Menlo:h18
 set guifont=Inconsolata\ for\ Powerline:h18
@@ -111,9 +114,6 @@ Plugin 'git://git.wincent.com/command-t.git'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-" Plugin 'ascenator/L9', {'name': 'newL9'}
 " SimplyFold
 Plugin 'tmhedberg/SimpylFold'
 " Python Indention
@@ -131,12 +131,12 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'kien/ctrlp.vim'
 " Powerline
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-" Node & Javascript
 Plugin 'moll/vim-node'
 Plugin 'pangloss/vim-javascript'
-" Jedi VIM
+" Jedi-VIM
 Plugin 'davidhalter/jedi-vim'
-
+" Supertab
+Plugin 'ervandew/supertab'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -162,6 +162,7 @@ if has('gui_running')
 else
     colorscheme zenburn
 endif
+
 "split navigations
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -170,6 +171,9 @@ nnoremap <C-H> <C-W><C-H>
 
 " turn off search highlight
 nnoremap <leader><space> :nohlsearch<CR>
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " proper indentation
 au BufNewFile,BufRead *.py
@@ -200,6 +204,9 @@ map <silent> <leader>t :NERDTreeTabsToggle<CR>
 " Start NERDTree Tabs automatically "
 let g:nerdtree_tabs_open_on_console_startup = 1
 
+" Map bd to F4
+map <F4> :bd<CR>
+
 " CtrlP commands
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
@@ -221,5 +228,3 @@ if executable('ag')
     " ag is fast enough that CtrlP doesn't need to cache
     let g:ctrlp_use_caching = 0
 endif
-" bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
