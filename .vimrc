@@ -17,7 +17,7 @@ set foldenable
 set foldlevelstart=10
 
 " 10 nested fold max
-set foldnestmax=10
+set foldnestmax=99
 
 " we dont need no stinking swap files
 set backup
@@ -88,7 +88,8 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-
+" You Complete Me
+Plugin 'Valloric/YouCompleteMe'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -156,6 +157,9 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" turn off caps lock
+inoremap jj <Esc>`^
+
 " turn off search highlight
 nnoremap <leader><space> :nohlsearch<CR>
 
@@ -186,6 +190,7 @@ let NERDTreeShowHidden=1
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 let g:ycm_key_list_select_completion=[]
 let g:ycm_key_list_previous_completion=[]
+map <C-]> :YcmCompleter GoToImprecise<CR>
 
 " CtrlP commands
 let g:ctrlp_map = '<c-p>'
