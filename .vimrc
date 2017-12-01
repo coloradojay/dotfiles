@@ -13,18 +13,20 @@ set foldmethod=indent
 " enable folding
 set foldenable
 
+" no mo wrappin
+set nowrap
+
 " show all folds
-set foldlevelstart=10
+set foldlevel=99
 
 " 10 nested fold max
-set foldnestmax=99
+set foldnestmax=20
 
 " we dont need no stinking swap files
-set backup
-set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set backupskip=/tmp/*,/private/tmp/*
-set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set writebackup
+set nobackup
+set nowritebackup
+set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
+set history=50
 
 " use ruler and tabstop
 set ruler
@@ -110,11 +112,13 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'tmhedberg/SimpylFold'
 " Python Indention
 Plugin 'vim-scripts/indentpython.vim'
-Plugin 'scrooloose/syntastic'
 Plugin 'nvie/vim-flake8'
 Plugin 'editorconfig/editorconfig-vim'
 " Themes
 Plugin 'flazz/vim-colorschemes'
+Plugin 'beigebrucewayne/skull-vim'
+Plugin 'jakwings/vim-colors'
+Plugin 'kristijanhusak/vim-hybrid-material'
 " File Browsing
 Plugin 'scrooloose/nerdtree'
 " Super Searching
@@ -126,6 +130,7 @@ Plugin 'moll/vim-node'
 Plugin 'pangloss/vim-javascript'
 " Tmux Navigation
 Bundle 'christoomey/vim-tmux-navigator'
+Plugin 'w0rp/ale'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -144,12 +149,14 @@ filetype plugin indent on    " required
 if has('gui_running')
     let s:uname = system("uname")
     if s:uname == "Darwin\n"
-        set guifont=SourceCodePro\ for\ Powerline:h15
+        set guifont=SourceCodePro\ for\ Powerline:h18
     endif
     set background=dark
-    colorscheme zenburn
+    colorscheme hybrid_material
+    set mouse=a
 else
-    colorscheme zenburn
+    set background=dark
+    colorscheme hybrid_material
 endif
 "split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -168,8 +175,9 @@ au BufNewFile,BufRead *.py
             \ set tabstop=4 |
             \ set softtabstop=4 |
             \ set shiftwidth=4 |
-            \ set textwidth=79 |
+            \ set textwidth=0 |
             \ set expandtab |
+            \ set wrapmargin=0 |
             \ set autoindent |
             \ set fileformat=unix
 
