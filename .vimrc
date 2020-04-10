@@ -91,7 +91,7 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 " You Complete Me
-Plugin 'Valloric/YouCompleteMe'
+Plugin 'ycm-core/YouCompleteMe'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -125,12 +125,26 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 " Powerline
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+" PHP Support
+Plugin 'StanAngeloff/php.vim'
 " JS/Node Support
 Plugin 'moll/vim-node'
 Plugin 'pangloss/vim-javascript'
+" Ruby/Rails Support
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-dispatch'
+Plugin 'thoughtbot/vim-rspec'
+Plugin 'szw/vim-maximizer'
+Plugin 'tpope/vim-endwise'
+Plugin 'jparise/vim-graphql'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'elixir-editors/vim-elixir'
 " Tmux Navigation
 Bundle 'christoomey/vim-tmux-navigator'
 Plugin 'w0rp/ale'
+Plugin 'liuchengxu/space-vim-theme'
+Plugin 'prettier/vim-prettier'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -164,8 +178,16 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Rspec key mappings
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
+
+let g:rspec_command = "Dispatch rspec {spec}"
+
 " turn off caps lock
-inoremap jj <Esc>`^
+nnoremap jj <Esc>`^
 
 " turn off search highlight
 nnoremap <leader><space> :nohlsearch<CR>
@@ -181,18 +203,25 @@ au BufNewFile,BufRead *.py
             \ set autoindent |
             \ set fileformat=unix
 
-au BufNewFile,BufRead *.js,*.html,*.css,*.scss
+au BufNewFile,BufRead *.rb,*.js,*.jsx,*.ts,*.tsx,*.html,*.css,*.scss,*.yaml,*.yml
             \ set tabstop=2 |
             \ set softtabstop=2 |
-            \ set shiftwidth=2
+            \ set shiftwidth=2 |
+            \ set autoindent
 
 " Open NERDTree if no files were specified
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
+" Flake 8 config
+autocmd BufWritePost *.py call Flake8()
+
 " Use Ctrl n to open NERDTree
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
 
 " YouCompleteMe Default Auto-Complete
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
@@ -221,6 +250,9 @@ if executable('ag')
     " ag is fast enough that CtrlP doesn't need to cache
     let g:ctrlp_use_caching = 0
 endif
-
 " bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" prettier config
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
